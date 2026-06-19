@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRSD Traders — Computer & Tech Hardware</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --bg:#05070d;
+    --panel:#0d1424;
+    --panel2:#0a0f1c;
+    --cyan:#3df2ff;
+    --violet:#7c5cff;
+    --text:#e8edf7;
+    --dim:#8a93ad;
+    --line:#1c2942;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .display{font-family:'Orbitron',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* background circuit grid */
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:0.25;
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 20%, black 0%, transparent 75%);
+  }
+
+  /* header */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 6%;
+    background:rgba(5,7,13,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+
+  .logo{
+    font-size:1.3rem;
+    letter-spacing:1px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .logo .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 10px var(--cyan);
+  }
+
+  .logo span{color:var(--cyan);}
+
+  nav{display:flex;gap:32px;align-items:center;}
+  nav a{font-size:0.9rem;color:var(--dim);transition:color 0.2s;}
+  nav a:hover{color:var(--cyan);}
+
+  .nav-cta{
+    border:1px solid var(--cyan);
+    color:var(--cyan)!important;
+    padding:9px 18px;
+    border-radius:2px;
+    font-size:0.85rem;
+    letter-spacing:0.5px;
+  }
+  .nav-cta:hover{background:var(--cyan);color:var(--bg)!important;}
+
+  /* hero */
+  .hero{
+    padding:100px 6% 0;
+    max-width:1300px;
+    margin:0 auto;
+    position:relative;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:40px;
+    align-items:center;
+  }
+
+  .hero-copy{padding-bottom:60px;}
+
+  .hero-visual{
+    position:relative;
+    height:420px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:radial-gradient(circle at 70% 30%, rgba(124,92,255,0.12), transparent 60%), var(--panel2);
+    overflow:hidden;
+  }
+
+  .hero-visual svg{width:100%; height:100%;}
+
+  .scan-line{
+    position:absolute;
+    left:0; right:0;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity:0.6;
+    animation:scan 4s linear infinite;
+  }
+  @keyframes scan{
+    0%{top:0; opacity:0;}
+    10%{opacity:0.6;}
+    90%{opacity:0.6;}
+    100%{top:100%; opacity:0;}
+  }
+
+  .hero-readout{
+    position:absolute;
+    bottom:16px; left:16px; right:16px;
+    display:flex;
+    justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.65rem;
+    color:var(--dim);
+    border-top:1px solid var(--line);
+    padding-top:10px;
+    line-height:1.5;
+  }
+  .hero-readout b{color:var(--cyan); font-weight:500;}
+
+  @media (prefers-reduced-motion: reduce){
+    .scan-line{animation:none; display:none;}
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    color:var(--violet);
+    letter-spacing:2px;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:24px;height:1px;
+    background:var(--violet);
+  }
+
+  .hero h1{
+    font-family:'Orbitron',sans-serif;
+    font-weight:800;
+    font-size:clamp(2.6rem, 6vw, 5rem);
+    line-height:1.05;
+    letter-spacing:0.5px;
+    max-width:900px;
+  }
+
+  .hero h1 .grad{
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero p{
+    margin-top:24px;
+    max-width:560px;
+    color:var(--dim);
+    font-size:1.1rem;
+  }
+
+  .hero-ctas{
+    display:flex;
+    gap:16px;
+    margin-top:36px;
+    flex-wrap:wrap;
+  }
+
+  .btn-primary{
+    background:var(--cyan);
+    color:var(--bg);
+    padding:15px 30px;
+    border-radius:2px;
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.3px;
+    box-shadow:0 0 24px rgba(61,242,255,0.25);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 0 32px rgba(61,242,255,0.4);}
+
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:15px 30px;
+    border-radius:2px;
+    font-size:0.95rem;
+  }
+  .btn-ghost:hover{border-color:var(--dim);}
+
+  /* stat strip */
+  .stats{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-top:50px;
+  }
+  .stats div{
+    padding:28px 6%;
+    border-right:1px solid var(--line);
+  }
+  .stats div:last-child{border-right:none;}
+  .stats strong{
+    font-family:'JetBrains Mono',monospace;
+    font-size:1.8rem;
+    color:var(--cyan);
+    display:block;
+  }
+  .stats span{font-size:0.8rem; color:var(--dim); letter-spacing:0.5px;}
+
+  /* section heading pattern */
+  .section{padding:90px 6%; max-width:1300px; margin:0 auto;}
+
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:48px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:24px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .section-head h2{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.9rem;
+    letter-spacing:0.5px;
+  }
+
+  .section-head .index-label{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--dim);
+    font-size:0.85rem;
+  }
+
+  /* product grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+
+  .card{
+    background:var(--panel2);
+    padding:26px 22px;
+    position:relative;
+    overflow:hidden;
+    transition:background 0.25s ease;
+  }
+
+  .card::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+    transform:translateX(-100%);
+    transition:transform 0.5s ease;
+  }
+
+  .card:hover::before{transform:translateX(100%);}
+  .card:hover{background:#0f1830;}
+
+  .card .cat{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;
+    color:var(--violet);
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+
+  .card h3{
+    margin:12px 0 14px;
+    font-size:1.1rem;
+    font-weight:600;
+  }
+
+  .specs{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--dim);
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    margin-bottom:18px;
+  }
+  .specs div{display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding-bottom:4px;}
+  .specs div b{color:var(--text); font-weight:400;}
+
+  .price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .price{
+    font-family:'JetBrains Mono',monospace;
+    font-size:1.05rem;
+    color:var(--cyan);
+  }
+
+  .add-btn{
+    border:1px solid var(--line);
+    color:var(--dim);
+    font-size:0.75rem;
+    padding:7px 12px;
+    border-radius:2px;
+    letter-spacing:0.5px;
+  }
+  .add-btn:hover{border-color:var(--cyan); color:var(--cyan);}
+
+  /* categories band */
+  .categories{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .cat-tile{
+    background:var(--panel2);
+    padding:28px 16px;
+    text-align:center;
+    font-size:0.85rem;
+    color:var(--dim);
+    transition:all 0.2s ease;
+  }
+  .cat-tile b{display:block; color:var(--text); font-size:1.4rem; margin-bottom:8px; font-family:'Orbitron',sans-serif;}
+  .cat-tile:hover{background:#0f1830; color:var(--cyan);}
+  .cat-tile:hover b{color:var(--cyan);}
+
+  /* why us */
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+  }
+  .why-card{
+    border:1px solid var(--line);
+    padding:30px;
+    background:var(--panel2);
+  }
+  .why-card .num{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--violet);
+    font-size:0.85rem;
+    margin-bottom:14px;
+    display:block;
+  }
+  .why-card h3{margin-bottom:10px; font-size:1.15rem;}
+  .why-card p{color:var(--dim); font-size:0.95rem;}
+
+  /* CTA band */
+  .cta-band{
+    margin:0 6% 90px;
+    padding:60px 6%;
+    border:1px solid var(--line);
+    background:linear-gradient(135deg, rgba(61,242,255,0.06), rgba(124,92,255,0.06));
+    text-align:center;
+    border-radius:4px;
+  }
+  .cta-band h2{
+    font-family:'Orbitron',sans-serif;
+    font-size:2rem;
+    margin-bottom:14px;
+  }
+  .cta-band p{color:var(--dim); margin-bottom:30px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:50px 6% 30px;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:36px;
+  }
+  .footer-grid h4{font-size:0.85rem; letter-spacing:1px; color:var(--dim); margin-bottom:16px;}
+  .footer-grid a, .footer-grid p{font-size:0.9rem; color:var(--dim); display:block; margin-bottom:10px;}
+  .footer-grid a:hover{color:var(--cyan);}
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    display:flex;
+    justify-content:space-between;
+    font-size:0.8rem;
+    color:var(--dim);
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  @media (max-width: 1000px){
+    .hero{grid-template-columns:1fr; padding-top:60px;}
+    .hero-visual{height:280px; order:-1;}
+    .hero-copy{padding-bottom:30px;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .categories{grid-template-columns:repeat(3,1fr);}
+    .why-grid{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    nav{display:none;}
+  }
+  @media (max-width: 600px){
+    .grid{grid-template-columns:1fr;}
+    .categories{grid-template-columns:repeat(2,1fr);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <div class="logo"><span class="dot"></span>HRSD <span>TRADERS</span></div>
+  <nav>
+    <a href="#categories">Categories</a>
+    <a href="#products">Components</a>
+    <a href="#why">Why Us</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">HRSD TRADERS · COLOMBO</div>
+    <h1>Hardware for what<br>you're <span class="grad">building next.</span></h1>
+    <p>Genuine components, laptops, and peripherals — sourced, tested, and shipped island-wide. No clones, no guesswork, just specs you can verify.</p>
+    <div class="hero-ctas">
+      <a href="#products" class="btn-primary">Browse Components</a>
+      <a href="#contact" class="btn-ghost">Build a Custom PC</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="scan-line"></div>
+    <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="boardGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#0d1424"/>
+          <stop offset="100%" stop-color="#0a0f1c"/>
+        </linearGradient>
+      </defs>
+      <rect x="40" y="40" width="320" height="320" rx="6" fill="url(#boardGrad)" stroke="#1c2942" stroke-width="2"/>
+      <!-- CPU socket -->
+      <rect x="150" y="150" width="100" height="100" rx="4" fill="#05070d" stroke="#3df2ff" stroke-width="1.5"/>
+      <rect x="165" y="165" width="70" height="70" rx="2" fill="none" stroke="#7c5cff" stroke-width="1" stroke-dasharray="3 3"/>
+      <!-- traces -->
+      <path d="M150 170 H90 V90" stroke="#3df2ff" stroke-width="1.5" fill="none" opacity="0.7"/>
+      <path d="M150 200 H70" stroke="#3df2ff" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M150 230 H90 V310" stroke="#7c5cff" stroke-width="1.5" fill="none" opacity="0.7"/>
+      <path d="M250 170 H330 V90" stroke="#3df2ff" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M250 200 H340" stroke="#7c5cff" stroke-width="1.5" fill="none" opacity="0.7"/>
+      <path d="M250 230 H310 V310" stroke="#3df2ff" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M200 150 V90" stroke="#7c5cff" stroke-width="1.5" fill="none" opacity="0.6"/>
+      <path d="M200 250 V310" stroke="#3df2ff" stroke-width="1.5" fill="none" opacity="0.6"/>
+      <!-- nodes -->
+      <circle cx="90" cy="90" r="3.5" fill="#3df2ff"/>
+      <circle cx="70" cy="200" r="3.5" fill="#3df2ff"/>
+      <circle cx="90" cy="310" r="3.5" fill="#7c5cff"/>
+      <circle cx="330" cy="90" r="3.5" fill="#3df2ff"/>
+      <circle cx="340" cy="200" r="3.5" fill="#7c5cff"/>
+      <circle cx="310" cy="310" r="3.5" fill="#3df2ff"/>
+      <circle cx="200" cy="90" r="3.5" fill="#7c5cff"/>
+      <circle cx="200" cy="310" r="3.5" fill="#3df2ff"/>
+      <!-- corner mounts -->
+      <circle cx="55" cy="55" r="5" fill="none" stroke="#8a93ad" stroke-width="1.2"/>
+      <circle cx="345" cy="55" r="5" fill="none" stroke="#8a93ad" stroke-width="1.2"/>
+      <circle cx="55" cy="345" r="5" fill="none" stroke="#8a93ad" stroke-width="1.2"/>
+      <circle cx="345" cy="345" r="5" fill="none" stroke="#8a93ad" stroke-width="1.2"/>
+    </svg>
+    <div class="hero-readout">
+      <span>BOARD<br><b>AM5 · ATX</b></span>
+      <span>TEMP<br><b>34°C</b></span>
+      <span>STATUS<br><b>READY</b></span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div><strong>2,400+</strong><span>SKUs in stock</span></div>
+    <div><strong>11 YRS</strong><span>In the trade</span></div>
+    <div><strong>24HR</strong><span>Colombo dispatch</span></div>
+    <div><strong>1:1</strong><span>Genuine warranty</span></div>
+  </div>
+</section>
+
+<section class="section" id="categories">
+  <div class="section-head">
+    <h2>Shop by Category</h2>
+    <span class="index-label">[ 01 / CATALOG ]</span>
+  </div>
+  <div class="categories">
+    <div class="cat-tile"><b>GPU</b>Graphics Cards</div>
+    <div class="cat-tile"><b>CPU</b>Processors</div>
+    <div class="cat-tile"><b>MB</b>Motherboards</div>
+    <div class="cat-tile"><b>RAM</b>Memory</div>
+    <div class="cat-tile"><b>SSD</b>Storage</div>
+    <div class="cat-tile"><b>PSU</b>Power Supplies</div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="section-head">
+    <h2>Featured Components</h2>
+    <span class="index-label">[ 02 / IN STOCK ]</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <span class="cat">Graphics Card</span>
+      <h3>RTX 4070 Super 12GB</h3>
+      <div class="specs">
+        <div>Core Clock <b>2475 MHz</b></div>
+        <div>Memory <b>12GB GDDR6X</b></div>
+        <div>TDP <b>220W</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 218,500</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Processor</span>
+      <h3>Ryzen 7 7800X3D</h3>
+      <div class="specs">
+        <div>Cores <b>8C / 16T</b></div>
+        <div>Boost Clock <b>5.0 GHz</b></div>
+        <div>Socket <b>AM5</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 92,000</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Memory</span>
+      <h3>32GB DDR5 6000MHz</h3>
+      <div class="specs">
+        <div>Kit <b>2x16GB</b></div>
+        <div>Latency <b>CL30</b></div>
+        <div>Voltage <b>1.35V</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 34,900</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Storage</span>
+      <h3>2TB NVMe Gen4 SSD</h3>
+      <div class="specs">
+        <div>Read <b>7,000 MB/s</b></div>
+        <div>Write <b>6,500 MB/s</b></div>
+        <div>Interface <b>PCIe 4.0</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 28,500</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Motherboard</span>
+      <h3>B650 AORUS Elite</h3>
+      <div class="specs">
+        <div>Socket <b>AM5</b></div>
+        <div>Memory <b>DDR5, 128GB Max</b></div>
+        <div>Form <b>ATX</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 45,000</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Power Supply</span>
+      <h3>850W 80+ Gold</h3>
+      <div class="specs">
+        <div>Efficiency <b>90%+</b></div>
+        <div>Modular <b>Fully</b></div>
+        <div>Warranty <b>10 Years</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 22,900</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Laptop</span>
+      <h3>ProBook 14" i7 Gen13</h3>
+      <div class="specs">
+        <div>RAM <b>16GB</b></div>
+        <div>Storage <b>512GB SSD</b></div>
+        <div>Display <b>14" FHD IPS</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 285,000</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="cat">Peripheral</span>
+      <h3>Mechanical Keyboard RGB</h3>
+      <div class="specs">
+        <div>Switch <b>Hot-swap</b></div>
+        <div>Layout <b>TKL</b></div>
+        <div>Connection <b>Wired / 2.4G</b></div>
+      </div>
+      <div class="price-row">
+        <span class="price">Rs. 12,500</span>
+        <span class="add-btn">+ ADD</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="section-head">
+    <h2>Why Buy From HRSD</h2>
+    <span class="index-label">[ 03 / TRUST ]</span>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="num">／ 01</span>
+      <h3>Verified Genuine Stock</h3>
+      <p>Every component comes with manufacturer warranty cards and serials you can register directly — no grey imports.</p>
+    </div>
+    <div class="why-card">
+      <span class="num">／ 02</span>
+      <h3>Built & Tested In-House</h3>
+      <p>Custom builds are stress-tested for 24 hours before they leave our workshop, with a full burn-in report included.</p>
+    </div>
+    <div class="why-card">
+      <span class="num">／ 03</span>
+      <h3>Island-Wide Delivery</h3>
+      <p>Same-day dispatch from Colombo, with courier tracking sent straight to your phone the moment it ships.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band" id="contact">
+  <h2>Need a custom build?</h2>
+  <p>Tell us your budget and use case — gaming, editing, or office — and we'll spec a full system for you.</p>
+  <a href="#" class="btn-primary">Request a Build Quote</a>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4 style="color:var(--cyan);">HRSD TRADERS</h4>
+      <p>No. 142, Galle Road, Colombo 03, Sri Lanka</p>
+      <p>Open Mon – Sat, 9:00 AM – 7:00 PM</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="#">Graphics Cards</a>
+      <a href="#">Processors</a>
+      <a href="#">Laptops</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a href="#">Warranty Claim</a>
+      <a href="#">Track Order</a>
+      <a href="#">Custom Build</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:+94112345678">+94 11 234 5678</a>
+      <a href="mailto:sales@hrsdtraders.test">sales@hrsdtraders.test</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 HRSD Traders. All rights reserved.</span>
+    <span class="mono">SYSTEM STATUS: ONLINE</span>
+  </div>
+</footer>
+
+</body>
+</html>
